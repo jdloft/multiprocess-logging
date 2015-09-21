@@ -23,21 +23,20 @@ logging.basicConfig(
 )
 
 class JobProcess(multiprocessing.Process):
-    def __init__(self, job):
+    def __init__(self, name, job):
         super(JobProcess, self).__init__()
+        self.name = name
         self.job = job
 
     def run(self):
-        # sys.stdout = open('file', 'w')
-        # sys.stderr = open('file', 'a')
-        thread_stdout = logging.getLogger("ThreadSTDOUT")
-        thread_stderr = logging.getLogger("ThreadSTDERR")
-        sys.stdout = StreamToLogger(thread_stdout, logging.INFO)
-        sys.stderr = StreamToLogger(thread_stderr, logging.ERROR)
+        thread_logger = logging.getLogger(self.name)
+        sys.stdout = StreamToLogger(thread_logger, logging.INFO)
+        sys.stderr = StreamToLogger(thread_logger, logging.ERROR)
+        thread_logger.info("\nStarting " + self.name + "...")
         self.job.main()
 
 print("Awesome test program!")
 testing_module = __import__("test_thread")
-test_job = JobProcess(testing_module)
+test_job = JobProcess("Thread 1", testing_module)
 test_job.start()
 print("DONE!!")
