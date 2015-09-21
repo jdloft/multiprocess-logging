@@ -32,7 +32,7 @@ class JobProcess(multiprocessing.Process):
         thread_logger = logging.getLogger(self.name)
         sys.stdout = StreamToLogger(thread_logger, logging.INFO)
         sys.stderr = StreamToLogger(thread_logger, logging.ERROR)
-        thread_logger.info("\nStarting " + self.name + "...")
+        thread_logger.info("Starting " + self.name + "...")
         self.job.main()
 
 print("Awesome test program!")
