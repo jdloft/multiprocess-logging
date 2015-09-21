@@ -35,8 +35,8 @@ class JobProcess(multiprocessing.Process):
         thread_logger.info("Starting " + self.name + "...")
         self.job.main()
 
-print("Awesome test program!")
+print("Notice how regular print statements don't go to the log.")
 testing_module = __import__("test_thread")
 test_job = JobProcess("Thread 1", testing_module)
 test_job.start()
-print("DONE!!")
+print("Process queued!")
